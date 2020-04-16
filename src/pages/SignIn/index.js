@@ -6,6 +6,8 @@ import * as Yup from 'yup';
 
 import { signInRequest } from '~/store/modules/auth/actions';
 
+import MessengerSvg from '~/assets/svg/mensageiro.svg';
+
 export default function SignIn() {
   const dispatch = useDispatch();
   const loading = useSelector(state => state.auth.loading);
@@ -31,8 +33,14 @@ export default function SignIn() {
     <div className="container d-flex flex-column">
       <div className="row align-items-center justify-content-center no-gutters min-vh-100">
         <div className="col-12 col-md-5 col-lg-4 py-8 py-md-11">
-          <h1 className="font-bold text-center">Acessar</h1>
-          <p className="text-center mb-6">Bem vindo ao messenger web</p>
+          <div className="text-center">
+            <img
+              className="avatar-img avatar-login"
+              src={MessengerSvg}
+              alt="Messenger"
+            />
+          </div>
+          <p className="text-center mb-6">Bem vindo ao Messenger Web</p>
           <form className="mb-6" onSubmit={formik.handleSubmit}>
             <div className="form-group">
               <input
@@ -76,7 +84,6 @@ export default function SignIn() {
               {loading ? 'Carregando...' : 'ENTRAR'}
             </button>
           </form>
-
           <p className="text-center">
             Não possui uma conta? <Link to="/register">Cadastre-se</Link>
           </p>

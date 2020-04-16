@@ -12,7 +12,7 @@ import Chat from '~/pages/Chat';
 let socket;
 
 function AuthLayout({ children }) {
-  return { children };
+  return <>{children}</>;
 }
 
 function DefaultLayout({ children }) {

@@ -13297,6 +13297,11 @@ a.text-muted.active{
       opacity:1
   }
 }
+.avatar-login{
+  max-width: 150px;
+  max-height: 150px;
+  margin-bottom: 35px;
+}
 .avatar{
   background:#f5f6fa;
   display:inline-block;
