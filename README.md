@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="FastFeet" height="215" title="FastFeet" src="./src/assets/svg/mensageiro.svg" />
+  <img alt="Messenger" height="215" title="FastFeet" src="./src/assets/svg/mensageiro.svg" />
 </h1>
 
 <p align="center">Interface Web de Messenger</p>
@@ -14,6 +14,5 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 _ps: Antes de executar, lembre-se de iniciar o backend deste projeto_
 
-- A partir da raiz do projeto, entre na pasta do frontend web rodando `cd web`;
 - Rode `yarn` para instalar as dependências;
 - Rode `yarn start` para iniciar o client web;

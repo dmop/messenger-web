@@ -1,11 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { Link } from 'react-router-dom';
 
 import { signOut } from '~/store/modules/auth/actions';
 import { endChat } from '~/store/modules/friend/actions';
-
-import Avatar12 from '~/assets/images/avatars/12.jpg';
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -26,7 +23,11 @@ export default function Profile() {
               <div className="card-body">
                 <div className="text-center py-6">
                   <div className="avatar avatar-xl mb-5">
-                    <img className="avatar-img" src={Avatar12} alt="" />
+                    <img
+                      className="avatar-img"
+                      src="https://api.adorable.io/avatars/285/abott@adorable.png"
+                      alt={profile.name}
+                    />
                   </div>
                   <h5>{profile.name}</h5>
                 </div>
@@ -78,16 +79,6 @@ export default function Profile() {
               </div>
             </div>
             <div className="form-row">
-              <div className="col">
-                <button
-                  type="button"
-                  className="btn btn-lg btn-block btn-basic d-flex align-items-center"
-                >
-                  Configurações
-                  <span className="fe-settings ml-auto" />
-                </button>
-              </div>
-
               <div className="col">
                 <button
                   type="button"

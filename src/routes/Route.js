@@ -46,7 +46,7 @@ export default function RouteWrapper({
   }
 
   if (signed && !isPrivate) {
-    return <Redirect to="/chats" />;
+    return <Redirect to="/friends" />;
   }
 
   const Layout = signed ? DefaultLayout : AuthLayout;

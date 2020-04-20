@@ -11,6 +11,14 @@ export default function Chat({ socket, currentChatFriend }) {
   const messagesEndRef = useRef(null);
   const textInput = useRef(null);
 
+  // let peerConnection;
+  // const { peerConnection, RTCSessionDescription } = window;
+  let room = `${userProfile.id}_${currentChatFriend.id}`;
+
+  if (userProfile.id > currentChatFriend.id) {
+    room = `${currentChatFriend.id}_${userProfile.id}`;
+  }
+
   const formik = useFormik({
     initialValues: {
       text: '',
@@ -22,6 +30,7 @@ export default function Chat({ socket, currentChatFriend }) {
       socket.emit('SENDING_MESSAGE', {
         user_id: userProfile.id,
         friend_id: currentChatFriend.id,
+        room,
         message: text,
       });
 
@@ -42,25 +51,102 @@ export default function Chat({ socket, currentChatFriend }) {
   };
 
   useEffect(() => {
-    socket.emit('CREATE_CHAT', {
-      user_id: userProfile.id,
-      friend_id: currentChatFriend.id,
-    });
+    // async function getUserVideo() {
+    //   try {
+    //     const stream = await navigator.mediaDevices.getUserMedia({
+    //       video: true,
+    //       audio: true,
+    //     });
 
-    socket.on('LIST_MESSAGES', payload => {
-      setMessages([...payload.messages]);
+    //     const localVideo = document.getElementById('local-video');
 
+    //     if (localVideo) {
+    //       localVideo.srcObject = stream;
+    //     }
+
+    //     stream.getTracks().forEach(track => {
+    //       console.log(track);
+    //       peerConnection.addTrack(track, stream);
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+
+    // async function callUser() {
+    //   try {
+    //     peerConnection = new RTCPeerConnection();
+    //     const offer = await peerConnection.createOffer();
+    //     await peerConnection.setLocalDescription(
+    //       new RTCSessionDescription(offer)
+    //     );
+
+    //     socket.emit('CALL_USER', {
+    //       offer,
+    //       room,
+    //     });
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+
+    // if (peerConnection) {
+    //   peerConnection.ontrack = ({ streams: [stream] }) => {
+    //     console.log('aqui');
+    //     const remoteVideo = document.getElementById('remote-video');
+    //     if (remoteVideo) {
+    //       remoteVideo.srcObject = stream;
+    //     }
+    //   };
+    // }
+    socket.on('LIST_MESSAGES', ({ room, messages }) => {
+      setMessages([...messages]);
       scrollToBottom();
       focusInput();
     });
 
-    // return () => {
-    // console.log('leaving room');
-    // socket.emit('leave room', {
-    //   room: 'test-room',
+    // socket.on('CALL_MADE', async data => {
+    //   await peerConnection.setRemoteDescription(
+    //     new RTCSessionDescription(data.offer)
+    //   );
+    //   const answer = await peerConnection.createAnswer();
+    //   await peerConnection.setLocalDescription(
+    //     new RTCSessionDescription(answer)
+    //   );
+
+    //   socket.emit('MAKE_ANSWER', {
+    //     answer,
+    //     room,
+    //     user_id: userProfile.id,
+    //     friend_id: currentChatFriend.id,
+    //   });
     // });
+
+    // socket.on('ANSWER_MADE', async data => {
+    //   await peerConnection.setRemoteDescription(
+    //     new RTCSessionDescription(data.answer)
+    //   );
+
+    //   callUser();
+    // });
+
+    // return () => {
+      // console.log('leaving room');
+      // socket.emit('leave room', {
+      //   room: 'test-room',
+      // });
     // };
+    // getUserVideo();
+    // callUser();
   }, []);
+
+  useEffect(() => {
+    socket.emit('CREATE_CHAT', {
+      room,
+      user_id: userProfile.id,
+      friend_id: currentChatFriend.id,
+    });
+  }, [room]);
 
   return (
     <div className="main main-visible" data-mobile-height="">
@@ -99,9 +185,33 @@ export default function Chat({ socket, currentChatFriend }) {
                     </div>
                   </div>
                 </div>
+                <div className="col-6 col-xl-6 text-right">
+                  <div className="nav justify-content-end">
+                    <ul className="nav justify-content-end">
+                      <li className="nav-item list-inline-item d-none d-xl-block mr-3">
+                        <div
+                          className="nav-link text-muted px-3"
+                          data-toggle="collapse"
+                          data-target="#chat-2-search"
+                          title="Search this chat"
+                        >
+                          <i className="icon-md fe-video" />
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          {/* <div className="row video-container">
+            <div className="col-md-6">
+              <video autoPlay muted className="local-video" id="local-video" />
+            </div>
+            <div className="col-md-6">
+              <video autoPlay className="remote-video" id="remote-video" />
+            </div>
+          </div> */}
           <div className="chat-content px-lg-8" onClick={() => focusInput()}>
             <div className="container-xxl py-6 py-lg-10">
               {messages &&
