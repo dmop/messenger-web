@@ -42,7 +42,7 @@ export default function RouteWrapper({
   }
 
   if (signed && !socket) {
-    socket = SocketIo('http://localhost:4444');
+    socket = SocketIo('http://api.danilopedrosa.com/');
   }
 
   if (signed && !isPrivate) {
